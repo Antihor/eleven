@@ -1,0 +1,13 @@
+import{a as b,S,i as f}from"./assets/vendor-NeYdtwFS.js";(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))s(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const a of r.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&s(a)}).observe(document,{childList:!0,subtree:!0});function n(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerPolicy&&(r.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?r.credentials="include":e.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function s(e){if(e.ep)return;e.ep=!0;const r=n(e);fetch(e.href,r)}})();const h=document.querySelector(".loader");function m({webformatURL:o,largeImageURL:t,tags:n,likes:s,views:e,comments:r,downloads:a}){return`
+
+    <li class="gallery-card">
+      <a href=${t}>
+    <img src=${o} alt=${n} /></a>
+    <div class="card-legend">
+    <p>Views: ${e}</p>
+    <p>Likes: ${s}</p>
+    <p>Comments: ${r}</p>
+    <p>Downloads: ${a}</p>
+    </div>
+      </li>`}function p(){h.classList.remove("hidden")}function g(){h.classList.add("hidden")}function y(o,t){const n="https://pixabay.com/api/",s="42059071-0978dc0d7158b742eee7c30f5",e=new URLSearchParams({page:t,per_page:15,url:"url",key:s,q:encodeURIComponent(o),image_type:"photo",orientation:"horizontal",safesearch:!0});return b.get(`${n}?${e}`)}const u=document.querySelector(".form"),c=document.querySelector(".js-gallery"),i=document.querySelector(".js-load-more"),L=new S(".js-gallery a",{captionsData:"alt",captionDelay:250});let d=1,l="";u.addEventListener("submit",w);async function w(o){try{o.preventDefault(),p(),l=o.currentTarget.elements.query.value.trim(),d=1,i.classList.add("hidden");const{data:t}=await y(l,d);(t.hits.length===0||l==="")&&(f.error({title:"Sorry!",message:"There are no images matching your search query. Please try again!",position:"topLeft"}),c.innerHTML="",i.classList.add("hidden"),u.reset());const n=t.hits.map(s=>m(s)).join("");c.innerHTML=n,L.refresh(),g(),u.reset(),i.classList.remove("hidden"),i.addEventListener("click",v)}catch(t){console.log(t)}}async function v(){try{p(),d+=1;const{data:o}=await y(l,d);c.children.length>=o.totalHits&&(f.error({title:"Sorry!",message:"You have reached the end of search results!",position:"topLeft"}),i.classList.add("hidden"),i.removeEventListener("click",v));const t=o.hits.map(s=>m(s)).join("");c.insertAdjacentHTML("beforeend",t),g(),L.refresh();const n=c.firstElementChild.getBoundingClientRect().height;window.scrollBy({top:n*2,behavior:"smooth"})}catch(o){console.log(o)}}
+//# sourceMappingURL=index.js.map
